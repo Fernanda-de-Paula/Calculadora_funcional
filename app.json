@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "Calculadora da Bibi",
+    "slug": "expocalc-gabi",
+    "version": "1.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "android": {"package": "com.mgabrielamnts.expocalc"},
+    "ios": {"supportsTablet": true}
+  }
+}
