@@ -3,9 +3,11 @@ import { View, Text, FlatList, Button, TouchableOpacity, StyleSheet, Alert } fro
 import { limpar, salvar } from '../storage/historico';
 
 export default function HistoricoScreen({ route, navigation }) {
-  // Evolução 1: a lista é estado, para a tela atualizar ao excluir.
+
+  // Armazena as contas do histórico para atualizar a lista quando necessário
   const [lista, setLista] = useState(route.params?.historico || []);
 
+  // Limpa o histórico salvo e atualiza a lista na tela
   async function limparHistorico() {
     try {
       await limpar();
@@ -15,7 +17,7 @@ export default function HistoricoScreen({ route, navigation }) {
     }
   }
 
-  // Evolução 2: filter cria uma nova lista sem a conta escolhida.
+  // Remove apenas a conta selecionada e salva a lista atualizada
   async function excluir(id) {
     const nova = lista.filter((item) => item.id !== id);
     try {
@@ -26,7 +28,7 @@ export default function HistoricoScreen({ route, navigation }) {
     }
   }
 
-  // Evolução 3: retorna à mesma Home, levando o resultado.
+  // Volta para a calculadora com o resultado da conta selecionada
   function reutilizar(item) {
     navigation.popTo('Home', { valor: item.resultado, toque: Date.now() });
   }
@@ -36,6 +38,7 @@ export default function HistoricoScreen({ route, navigation }) {
       <View style={styles.barra}>
         <Button title="Limpar histórico" color="#8E5A9F" onPress={limparHistorico} />
       </View>
+
       <FlatList
         data={lista}
         keyExtractor={(item) => item.id}
@@ -45,6 +48,7 @@ export default function HistoricoScreen({ route, navigation }) {
               <Text style={styles.texto}>{item.conta} = {item.resultado}</Text>
               <Text style={styles.dica}>Toque para reutilizar o resultado</Text>
             </TouchableOpacity>
+
             <Button title="Excluir" color="#C86B98" onPress={() => excluir(item.id)} />
           </View>
         )}
